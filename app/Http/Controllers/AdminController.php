@@ -582,7 +582,7 @@ class AdminController extends Controller
 	    		'menu_id' => $request->menu_id,
 	    		'name' => $request->name,
 	    		'slug' => $request->slug,
-	    		'icon' => $request->slug,
+	    		'icon' => $request->icon,
 	    		'order' => $request->order
 	    	]);
 
