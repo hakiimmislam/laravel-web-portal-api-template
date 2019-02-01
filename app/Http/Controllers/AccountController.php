@@ -31,6 +31,32 @@ class AccountController extends Controller
     	}
     }
 
+    public function update(Request $request)
+    {
+    	try {
+	    	$validator = Validator::make($request->all(), [
+	            'name' => 'required',
+	            'username' => 'required',
+	            'email' => 'required|email'
+	        ]);
+
+	        if ($validator->fails()) {
+	            return response()->json(['result' => 'ERROR', 'msg' => 'The given data was invalid.']);
+	        }
+
+	        $this->user->update([
+	        	'name' => $request->name,
+	        	'username' => $request->username,
+	        	'email' => $request->email
+	        ]);
+
+	        return response()->json(['result' => 'GOOD']);
+    	}
+    	catch (\Exception $e) {
+            return response()->json(['result' => 'ERROR', 'msg' => $e->getMessage()]);
+    	}
+    }
+
     public function resetPassword(Request $request)
     {
     	try {
@@ -42,7 +68,8 @@ class AccountController extends Controller
             if ($validator->fails()) {
                 if ($validator->messages()->get('password') == ['The password confirmation does not match.']) {
                     return response()->json(['result' => 'PASSWORDCONFIRMATION']);
-                }else{
+                }
+                else {
                     return response()->json(['result' => 'INCOMPLETEPARAMS']);
                 }
             }
