@@ -743,48 +743,4 @@ class AdminController extends Controller
             return response()->json(['result' => 'ERROR', 'msg' => $e->getMessage()]);
     	}
     }
-
-    public function getUser() {
-    	try {
-    		$user = $this->user;
-
-    		return response()->json(['result' => 'GOOD', 'data' => $user]);
-    	}
-    	catch (\Exception $e) {
-    		Log::error($e->getMessage());
-            return response()->json(['result' => 'ERROR', 'msg' => $e->getMessage()]);
-    	}
-    }
-
-    public function resetPasswordUser(Request $request)
-    {
-    	try {
-            $validator = Validator::make($request->all(), [
-                'current_password' => 'required',
-                'password' => 'required|confirmed'
-            ]);
-
-            if ($validator->fails()) {
-                if ($validator->messages()->get('password') == ['The password confirmation does not match.']) {
-                    return response()->json(['result' => 'PASSWORDCONFIRMATION']);
-                }else{
-                    return response()->json(['result' => 'INCOMPLETEPARAMS']);
-                }
-            }
-
-            $user = User::findOrFail($this->user->id);
-            
-            if (Hash::check($request->current_password, $user->password)) {
-            	$user->update(['password' => Hash::make($request->password)]);
-
-	    		return response()->json(['result' => 'GOOD']);
-            }
-
-            return response()->json(['result' => 'INCORRECTPASSWORD']);
-    	}
-    	catch (\Exception $e) {
-	    	Log::error($e->getMessage());
-            return response()->json(['result' => 'ERROR', 'msg' => $e->getMessage()]);
-    	}
-    }
 }
