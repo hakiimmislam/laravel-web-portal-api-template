@@ -57,6 +57,11 @@ class AccountController extends Controller
     	}
     }
 
+    public function uploadImage(Request $request)
+    {
+        
+    }
+
     public function resetPassword(Request $request)
     {
     	try {

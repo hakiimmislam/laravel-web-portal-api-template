@@ -698,7 +698,7 @@ class AdminController extends Controller
 
 						    				if (count(array_intersect($role_id, $submenu_roles)) > 0) {
 						    					$item_submenu->setAttribute('name', $item_submenu->name);
-						    					$item_submenu->setAttribute('url', $item_submenu->slug);
+						    					$item_submenu->setAttribute('url', $item_menu->slug . '/' . $item_submenu->slug);
 						    					$item_submenu->setAttribute('submenu_icon', $item_submenu->icon);
 
 						    					return $item_submenu;

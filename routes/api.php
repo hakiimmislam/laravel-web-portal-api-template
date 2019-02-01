@@ -50,8 +50,9 @@ Route::group(['middleware' => ['auth:api']], function () {
 
 	Route::group(['prefix' => 'account'], function () {
 		Route::get('get', 'AccountController@get');
-		Route::post('reset/password', 'AccountController@resetPassword');
 		Route::post('update', 'AccountController@update');
+		Route::post('upload/image', 'AccountController@uploadImage');
+		Route::post('reset/password', 'AccountController@resetPassword');
 	});
 
 	Route::post('/permission/check', 'PermissionController@checkAccess');
