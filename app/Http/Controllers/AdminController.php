@@ -697,7 +697,6 @@ class AdminController extends Controller
 						    				$submenu_roles = $item_submenu->roles()->pluck('role_id')->toArray();
 
 						    				if (count(array_intersect($role_id, $submenu_roles)) > 0) {
-						    					$item_submenu->setAttribute('key', $item_submenu->id);
 						    					$item_submenu->setAttribute('name', $item_submenu->name);
 						    					$item_submenu->setAttribute('url', $item_submenu->slug);
 						    					$item_submenu->setAttribute('submenu_icon', $item_submenu->icon);
@@ -711,7 +710,6 @@ class AdminController extends Controller
 						    			->values();
 
 					    			if (count($sub) > 0) {
-					    				$item_menu->setAttribute('key', $item_menu->id);
 					    				$item_menu->setAttribute('parent_menu', $item_menu->name);
 						    			$item_menu->setAttribute('sub_menus', $sub);
 						    			$item_menu->setAttribute('menu_icon', $item_menu->icon);
@@ -721,7 +719,6 @@ class AdminController extends Controller
 					    			$menu_roles = $item_menu->roles()->pluck('role_id')->toArray();
 
 				    				if (count(array_intersect($role_id, $menu_roles)) > 0) {
-				    					$item_menu->setAttribute('key', $item_menu->id);
 				    					$item_menu->setAttribute('parent_menu', $item_menu->name);
 				    					$item_menu->setAttribute('url', $item_menu->slug);
 				    					$item_menu->setAttribute('menu_icon', $item_menu->icon);
