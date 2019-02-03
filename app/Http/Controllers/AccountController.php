@@ -61,13 +61,26 @@ class AccountController extends Controller
 
     public function uploadImage(Request $request)
     {
-        $filename = str_random(10) . '.jpg';
+        try {
+            $filename = str_random(10) . '.jpg';
 
-        $img = Image::make($request->file('image')->getRealPath());
-        $img = $img->encode('jpg', 50);
+            $img = Image::make($request->file('image')->getRealPath());
+            $img = $img->encode('jpg', 50);
 
-        Storage::disk('public')->put($this->user->id . '/' . $filename, $img->getEncoded());
-        $this->user->update(['image' => $filename]);
+            $storage = Storage::disk('public');
+            
+            if (!is_null($this->user->image)) {
+                $storage->delete($this->user->id . '/' . $this->user->image);
+            }
+
+            $storage->put($this->user->id . '/' . $filename, $img->getEncoded());
+            $this->user->update(['image' => $filename]);
+
+            return response()->json(['result' => 'GOOD']);
+        }
+        catch (\Exception $e) {
+            return response()->json(['result' => 'ERROR', 'msg' => $e->getMessage()]);
+        }
     }
 
     public function resetPassword(Request $request)
