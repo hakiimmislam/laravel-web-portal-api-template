@@ -9,6 +9,8 @@ use Validator;
 use Hash;
 use Log;
 use Auth;
+use Image;
+use Storage;
 
 class AccountController extends Controller
 {
@@ -59,7 +61,13 @@ class AccountController extends Controller
 
     public function uploadImage(Request $request)
     {
-        
+        $filename = str_random(10) . '.jpg';
+
+        $img = Image::make($request->file('image')->getRealPath());
+        $img = $img->encode('jpg', 50);
+
+        Storage::disk('public')->put($this->user->id . '/' . $filename, $img->getEncoded());
+        $this->user->update(['image' => $filename]);
     }
 
     public function resetPassword(Request $request)
