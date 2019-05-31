@@ -55,5 +55,5 @@ Route::group(['middleware' => ['auth:api']], function () {
 		Route::post('reset/password', 'AccountController@resetPassword');
 	});
 
-	Route::post('/permission/check', 'PermissionController@checkAccess');
+	// Route::post('/permission/check', 'PermissionController@checkAccess');
 });
